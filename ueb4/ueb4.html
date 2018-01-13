@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Geovisualisierung Portfolio</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" />
+
+  <script type="text/javascript" src="js/OpenLayers.js"></script>
+  <script type="text/javascript" src="js/OpenStreetMap.js"></script>
+  <script type="text/javascript" src="js/proj4.js"></script>
+  <script type="text/javascript" src="js/styleMap.js"></script>
+  <script defer="defer" type="text/javascript" src="js/motorcar.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <h1>Geovisualisierung <a href="#">Portfolio</a></h1>
+        <div class="slogan"></div>
+      </div>
+    
+    <!-- Navigationbar -->
+	  <nav>
+	    <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../ueb1/ueb1.html">HTML & D3</a></li>
+          <li><a href="../ueb2/ueb2.html">Hochwasservisualisierung</a></li>
+		  <li class="current"><a href="../ueb3/osm.html">OpenStreetMap</a>
+  			<ul>
+  				<li><a href="../ueb3/ueb3.html">Teil 1</a></li>
+  				<li class="currentsub"><a href="../ueb4/ueb4.html">Teil 2</a></li>
+  				<li><a href="../ueb5/ueb5.html">Teil 3</a></li>
+  			</ul>
+      </li>
+		</ul>
+	  </nav>
+    </div>
+
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1>Routing mittels OSM Daten</h1>
+        <p>OSM Daten können zur Navigation, also zur Ermittlung der kürzesten Strecke zwischen zwei Punkten verwendet werden. In diesem Beispiel wurde in QGIS die kürzeste Strecke zwischen den Knotenpunkten 5 und 100 aus dem OSM-Datensatz berechnet (Abb.8). </p><br>
+        <p align="middle"><img src="media/Routenberechnung.jpeg" alt="Routenberechnung zwischen Knotenpunkt 5 und 100" width="800px"></p>
+        <p align="middle">Abb.8: Berechnete Route zwischen Knotenpunt 5 und 100</p>
+        <h2>Dokumentation</h2>
+        <ol>
+          <li><b>PostGreSQL-Datenbank-Server</b><br>
+            Mit der Anwendung <i>pgstart</i> auf dem GIS-Stick lässt sich einer PostGreSQl-Datenbank-Server starten, auf dem die OSM-Netzwerkdaten gespeichert werden. Die Datenbank kann mittels PgAdmin3 geöffnet und durchsucht werden.
+          </li>
+          <li><b>OSM-Datenaufbereitung</b><br>    
+            <p>Um einen OSM-Datensatz für eine Routingabfrage zu verwenden, muss dieser erst routingfähig gemacht werden. Bei dieser Anwendung wurde das frei verfügbare Werkzeug <i>osm2po</i> von <span id="quote">C. Möller (2011)</span> benutzt. Über die OSGeo-Kommandozeile wird das Werkzeug auf die Pbf-Datei des heruntergeladenen OSM-Datensatzes angewendet.</p>
+            <p id="code">java –jar osm2po-core-4.8.8-signed.jar prefix=NAME „PfadZurOsmPbfDatei“</p>
+            <p>Anschließend wird die erzeugte SQL-Datei, welche das OSM-Netzwerk beinhaltet, in die PostgreSQL-Datenbank importiert. Von dort aus kann das erzeugte Liniennetzwerk in QGIS als PostGIS-Layer hinzugefügt werden.</p>  
+            <p id="code">psql -h <i>Host-IP</i> -p5439 -U <i>Benutzername</i> -d <i>Passwort</i> -q -f „NameZurSQLDatei.sql"</p>
+          </li>
+          <li><b>Routing-Abfrage in QGIS mittels DB Manager</b><br>
+            Die Routing-Abfrage wurde in QGIS mit Hilfe des DB-Managers wurde ausgeführt. Also Anfangs- und Endpunkt wurden hier die Knotenpunkte 5 und 100 aus dem OSM-Datensatz gewählt.<br>
+          </li>
+          <p id="code">
+          SELECT seq, id1 AS node, id2 AS edge, cost,geom_way FROM pgr_dijkstra(<br>
+          'SELECT id, source, target, st_length(geom_way) as cost FROM public.de_2po_4pgr',<br>
+          5, 100, false, false<br>
+          ) as di<br>
+          JOIN public.de_2po_4pgr pt<br>
+          ON di.id2 = pt.id ;<br>
+          </p> 
+        </ol>
+        <p>Bei der Verwendung des DB-Managers kam es häufiger zu Fehlermeldungen. So konnte die Datenbank nicht geöffnet werden, da diese mit der Kodierung "WIN1252" erstellt wurde, welche nicht mit QGIS kompatibel ist (Abb.9). Auch das Ausführen von SQL-Abfragen führte in manchen Fällen zum Absturz des DB-Managers.<br><br></p>
+        <p align="middle"><img src="media/DBManager_fehler.png" width="600px"></p>
+        <p align="middle">Abb.9: Fehlermeldung DB Manager beim Versuch sich mit der Datenbank zu verbinden</p>
+    
+
+        <h2>Dijkstra-Algorithmus</h2>
+        <p>Aus der großen Zahl an Routing-Algorithmen wurde für dieses Beispiel der Dijkstra-Algorithmus verwendet. Dieser wurde 1956 von Edsger W. Dijkstra erfunden. Der Algorithmus berechnet ausgehend vom Startpunkt die Distanz zu allen anderen Knoten im Netzwerk. In der Ausgangssituation hat der Ausgangspunkt die Distanz 0 und alle anderen Knoten haben die vorläufige Distanz "unendlich".Vom aktuellen Knotenpunkt aus wird die Distanz zu allen unbesuchten Nachbarknoten berechnet. Der Knotenpunkt mit der kürzesten Distanz zum Ausgangspunkt wird zum neuen aktuellen Knotenpunkt gemacht. Ausgehend von diesem Punkt werden wiederum die Distanzen zu allen unbesuchten Nachbarknoten berechnet. Anschließend wird wiederum der Punkt mit der kürzesten Distanz zum Ausgangspunkt als neuer aktueller Punkt ausgewählt. Dieser Vorgang wird solang ausgeführt bis alle Knoten besucht sind und der kürzeste Pfad ermittelt ist. 
+        </p>
+
+        <div>
+          <h2>Quellen</h2>
+          <p>Teucher, M. (2015): Vorlesung Geovisualisierung WS 2014/2015. Universität Trier.
+          </p>
+        </div>  
+	  </div>
+    </div>
+    
+    <div id="footer">
+      <p>Geovisualisierung | Unviersität Trier | WS 2014/2015 | Dr. A. Müller & M. Teucher | Student: Christina Ludwig (1166542)<br>
+      Design based on &copy;simplestyle_7 <a href="http://www.html5webtemplates.co.uk">from HTML5webtemplates.co.uk</a></p>
+    </div>
+  </div>
+</body>
+</html>

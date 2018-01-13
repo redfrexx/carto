@@ -1,0 +1,37 @@
+.info {
+	font: 12px sans-serif;
+}
+
+.background{
+	fill:none;
+}
+.stationen{
+	fill:darkblue;
+}
+.stationen:hover{
+	fill:orange;
+}
+.values{
+	fill: darkblue;
+}
+.values:hover{
+	fill:orange;
+}
+.charttext{
+	font: 10px sans-serif;
+	fill: #000;
+}	
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	stroke-width: 0.5;
+	shape-rendering: crispEdges;
+}
+
+/*Definition um Mittelwert-Linie darzustellen*/
+.average{
+	stroke: steelblue;
+	stroke-dasharray: 5,5;
+	stroke-width:2;
+}

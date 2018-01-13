@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Geovisualisierung Portfolio</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" />
+  <link rel="stylesheet" type="text/css" href="css/mapstyle.css" />
+
+  <!-- D3 -->
+  <script src="js/d3.v3.min.js" charset="utf-8"></script>
+  <!-- Kreise Rheinland-Pfalz: var json -->
+  <script type="text/javascript" src="js/KREISE_RLP.js"></script>
+  <!-- Kreise Niederschlagsdaten: var jsonRain -->
+  <script type="text/javascript" src="js/Rain_RLP_2010.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/d3.slider.css" media="screen" />
+  <script src="js/d3.v3.min.js"></script>
+  <script src="js/d3.slider.js"></script>  
+  <script type="text/javascript" src="data/Duzi_Sites_Points.geojson"></script>
+  <script type="text/javascript" src="data/Duzi_rivers.geojson"></script>
+  <script type="text/javascript" src="data/roads_ausschnitt.geojson"></script>
+  <script type="text/javascript" src="data/urban_area.geojson"></script>
+
+</head>
+
+<body>
+    <div id="background"></div>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <h1>Geovisualisierung <a href="#">Portfolio</a></h1>
+        <div class="slogan"></div>
+      </div>
+
+      <!-- Navigationbar -->
+  	  <nav>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li  class="current"><a href="../ueb1/ueb1.html">HTML & D3</a></li>
+            <li><a href="../ueb2/ueb2.html">Hochwasservisualisierung</a></li>
+        <li><a href="../ueb3/osm.html">OpenStreetMap</a>
+          <ul>
+            <li><a href="../ueb3/ueb3.html">Teil 1</a></li>
+            <li><a href="../ueb4/ueb4.html">Teil 2</a></li>
+            <li><a href="../ueb5/ueb5.html">Teil 3</a></li>
+          </ul>
+        </li>
+      </ul>
+  	  </nav>
+    </div>
+	
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1>Visualisierung mit HTML und D3</h1>
+        <h2>Niederschlagsverteilung in Rheinland-Pfalz</h2>
+  			<p>Diese Grafik zeigt die Messtation und die dort gemessenen Niederschlagsdaten in Rheinland-Pfalz (Abb.1). Jeder Punkt auf der Karte repräsentiert dabei eine Messstelle. Durch Klicken auf einen dieser Punkte erscheint ein Graph, welcher die durchschnittliche Niederschlagsmenge in mm pro Monat im Jahresverlauf an dieser Stelle zeigt. Die gestrichelte blaue Linie stellt den Jahresdurchschnittswert des Niederschlages dar.
+  			</p>
+      	<div id="map" style="margin:5px" align="middle">
+          <script type="text/javascript" src="js/map_plot_start.js"></script>
+          <p>Abb.1: Niederschlagsdaten an ausgewählten Messstationen in Rheinland-Pfalz</p>
+      	</div>
+        <h3>Dokumentation</h3>
+  			<p>Die Visualisierung dieser Daten basiert auf HTML, CSS und der JavaScript-Bibliothek <a href="http://d3js.org/" target="blank_">D3 Data Driven Documents</a>. Wie der Name schon sagt, ermöglicht D3 die Erstellung von dynamischen Grafiken im Internet, welche durch hinterlegte Daten manipuliert werden können. In diesem Fall sind die Daten als json-Dateien im Verzeichnis der HTML-Datei hinterlegt und werden durch D3 in Form von SVG-Grafiken im HTML-Dokument eingebunden.<br>Beim Klicken auf einen der Punkte in der Karte wird die Funktion <i>showChart</i> aufgerufen. In dieser Funktion werden die Daten des Objektes, welches das Event ausgelöst hat, aus der json-Datei abgerufen und im Graph, welcher durch die Funktion <i>buildChart</i> erstellt wird, dargestellt. Ergänzend wurden dem Graph Achsenbeschriftungen hinzugefügt. Die farbliche und graphische Gestalung der Elemente wurde in der zugehörigen CSS-Datei spezifiziert.<br>
+        Aufgrund des Platzmangels in der Karte ist es nicht möglich, die Bezeichnungen der Messtationen oder Ortsnamen zur Orientierung einzublenden. Diesem Umstand könnte jedoch durch eine dynamische Einblendung von zusätzlichen Informationen zur seletierten Messstation neben der Karte Abhilfe geschafft werden.</p>
+        <h2>Konzentration von E.Coli Bakterien im Msunduzi River</h2>
+        <p>Um die Funktionen von D3 weiter auszutesten, wurde eine weitere Grafik erstellt. Hierbei handelt es sich um die wöchentlichen Messwerte der Konzentration von E.Coli Bakterien im Msunduzi River in Pietermaritzburg, Südafrika. Aufgrund der großen Müll- und Abwasserbelastung in weist der Fluss eine sehr hohe E.Coli Belastung auf, was eine großes gesundheitliches Risiko für die Anwohner darstellt, welche das Wasser des Flusses täglich nutzen. Um die Wasserqualität zu verbessern und die Bevölkerung für diese Problematik zu sensibilisieren, ist das Monitoring und die Veröffentlichung dieser Messdaten von großer Bedeutung. <br>
+        Diese Grafik unten ist ein erster Versuch, die Messwerte der einzelnen Messstellen sowohl räumlich als auch zeitlich miteinander in Bezug zu bringen, um das Phänomen der E.Coli.-Belastung in seiner Gesamtheit verständlich darzustellen (Abb.2) Der Datensatz enthält wöchentliche Messwerte von E.Coli beginnend am 14,01.2014. Grüne Werte repräsentieren niedrige, rote hohe Konzentrationen an E.Coli. Bakterien. Schwarze Punkte stellen Messwertlücken dar. 
+        </p>
+        <div id="map2" align="middle" style="border:1px solid #ddd">
+          <div id="karte" ></div><br><br>
+          <div id="slider" style="width:800px"></div><br><br>WOCHE<br>
+          <script type="text/javascript" src="js/duzi_ecoli.js"></script><br>
+          <p>Abb.2: E.Coli.Belastung im Msunduzi Fluss, Pietermaritzburg, Südafrika</p>
+        </div><br>
+        <h3>Dokumentation</h3>
+        <p>Mit Hilfe des Reglers unterhalb der Karte ist es möglich, die Messwerte zu einem bestimmten Zeitpunkt anzeigen zu lassen. Für die Einbindung des Reglers wurde die Bibliothek <a href="https://github.com/turban/d3.slider">d3.slider</a> von B. Sandvik verwendet. Mit jedem Verstellen des Reglers wird die Funktion <i>ActivateLayer</i> ausgelöst, welche die farbliche Darstellung der Messpunkte aktualisiert. Zur Visualisierung der Messwerte wurden die Messwerte druch <i>D3</i> auf eine von grün bis rot reichende Farbskala projeziert.<br>
+        Die Daten sind allesamt im GeoJSON-Format im Verzeichnis der html-Datei hinterlegt. Die Daten des Straßennetzes wurden aus OpenStreetMap exportiert. Die Daten zum Fluss und dem Stadtgebiet von Pietermaritzburg stammen von der Webseite <a href="http://www.naturalearthdata.com">Natural Earth Data</a>. Die E.Coli Daten stammen von der <a href="https://sites.google.com/site/mathubawiki2014/" target="blank_">Mathuba WIKI Seite</a>.<br>
+        Da die Karte nur einen ersten Entwurf darstellt, gibt es einige mögliche Verbesserungen. So ist es momentan nicht möglich, die Tick-Marks des Reglers mit einer beliebigen Beschriftung (z.Bsp. Datumsangabe) zu versehen. Auch eine farbliche Einteilung in Klassen anstatt einer kontinuierlichen Farbskala wäre sinnvoll. Für die Optimierung der Hintergrundkarte wäre es auch denkbar, die Verwendung von OpenLayers in Betracht zu ziehen.<br>
+        Sobald die Grafik optimiert und der Datensatz von Messfehlern bereinigt ist, soll die Grafik auf der <a href="https://sites.google.com/site/mathubawiki2014/" target="blank_">Mathuba WIKI Seite</a> veröffentlicht werden, um einen Beitrag zur Aufklärung über die Wasserproblematik in Pietermaritzburg zu leisten. 
+        </p>
+        <h2>Bedeutung von D3 in der Geovisualisierung</h2>
+        <p><i>D3</i> bietet ein sehr großes Potenzial für die Geovisualisierung. Die vielfältigen Funktionen von <i>D3</i> ermöglichen es, Daten in verschiedenen Abstraktions- und Detailgraden innerhalb einer dynamischen Grafik darzustellen. So ist es möglich alle Interaktionsmöglichkeiten wie sie in <span id="quote">Yi et al. (2007)</span> erläutert werden zu implementieren: select, explore, reconfigure, encode, resize, filter und connect. Im ersten Beispiel (Abb.1) werden so durch das Selektieren einer Messstelle (select) zusätzliche Informationen zur Auswahl (explore und connect) angezeigt. Darüber hinaus ermöglicht die dynamische und interaktive Darstellung der Daten eine Verknüpfung von räumlicher und zeitlicher Dimension. Im zweiten Beispiel (Abb.2) lässt sich so die zeitliche und räumliche Entwicklung der E.Coli Konzentration durch Betätigung des Reglers leicht nachverfolgen und analysieren. Im ersten Beispiel werden diese beiden Dimensionen durch die Verknüpfung von Karte und Graph implementiert. So ist es möglich, auf platzsparende und assoziative Weise eine große Menge an Daten und deren komplexe Zusammenhänge dem Betrachter effektiv zu präsentieren.
+        </p>
+        <div>
+          <h2>Quellen</h2>
+          <p>Yi, J.S. et al., 2007. Toward a Deeper Understanding of the Role of Interaction in Information Visualization. IEEE Transactions on Visualization and Computer Graphics, S. 1224-1231<br>
+          Mathuba Wiki (2014). <a href="https://sites.google.com/site/mathubawiki2014/" target="blank_">https://sites.google.com/site/mathubawiki2014/</a>. Zugriff: 24.03.2015<br>
+          Sandvik, B. (2014). d3.slider. <a href="https://github.com/turban/d3.slider">https://github.com/turban/d3.slider</a>. Zugriff: 24.03.2015<br>
+          D3 Data Driven Documents (2015). <a href="http://d3js.org/">http://d3js.org/</a>. Zugriff: 24.03.2015
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>Geovisualisierung | Unviersität Trier | WS 2014/2015 | Dr. A. Müller & M. Teucher | Student: Christina Ludwig (1166542)<br>
+      Design based on &copy;simplestyle_7 <a href="http://www.html5webtemplates.co.uk">from HTML5webtemplates.co.uk</a></p>
+    </div>
+  </div>
+</body>
+</html>

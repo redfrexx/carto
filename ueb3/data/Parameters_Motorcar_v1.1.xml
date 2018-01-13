@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<!--
+	The transport mode hierarchy describes the relationship between the access restriction tags.
+	See http://wiki.openstreetmap.org/wiki/Computing_access_restrictions#Transport_mode_hierarchy.
+	The parameter transport_mode_hierarchy represents the path to the transport mode that the parameter file is created for.
+	The last order element is the used transport mode of the network.
+	The parameter is used in the algorithm to calculate the access restrictions 
+	of highways (feature class roads > field access) and barriers (feature class barriers > field access).
+	See http://wiki.openstreetmap.org/wiki/Computing_access_restrictions#Algorithm.
+	-->
+	<transport_mode_hierarchy>
+		<orderElement value="access"/>
+		<orderElement value="vehicle"/>
+		<orderElement value="motor_vehicle"/>
+		<orderElement value="motorcar"/>
+	</transport_mode_hierarchy>
+	<!--
+	The parameter access_barrier_restrictions provides the default access restrictions for barriers.
+	The barrier access restrictions are calcuated similarly to the highway access restrictions (see parameter access_highway_restrictions).
+	See 
+		- http://wiki.openstreetmap.org/wiki/Key:barrier
+		- http://wiki.openstreetmap.org/wiki/Key:access
+		- http://wiki.openstreetmap.org/wiki/Computing_access_restrictions#Algorithm
+	The list element key is a value of the OSM tag 'barrier'.
+	The list element value defines the default access value for this barrier, e.g. 'yes', 'no', 'permissive', 'destination', ...
+	-->
+	<access_barrier_restrictions>
+		<listElementString key="cattle_grid" value="yes"/>
+		<listElementString key="sally_port" value="no"/>
+		<listElementString key="toll_booth" value="yes"/>
+		<listElementString key="bollard" value="no"/>
+		<listElementString key="pollard" value="no"/>
+		<listElementString key="cycle_barrier" value="no"/>
+		<listElementString key="block" value="no"/>
+		<listElementString key="stoneblocks" value="no"/>
+		<listElementString key="entrance" value="no"/>
+		<listElementString key="exit" value="no"/>
+		<listElementString key="gate" value="no"/>
+		<listElementString key="gate;cattle_grid" value="no"/>
+		<listElementString key="lift_gate" value="no"/>
+		<listElementString key="gate:lift" value="no"/>
+		<listElementString key="bar" value="no"/>
+		<listElementString key="stile" value="no"/>
+		<listElementString key="yes" value="no"/>
+		<listElementString key="small_fence" value="no"/>
+		<listElementString key="fence" value="no"/>
+		<listElementString key="kissing_gate" value="no"/>
+		<listElementString key="hampshire_gate" value="no"/>
+		<listElementString key="rotating_gate" value="no"/>
+		<listElementString key="spikes" value="no"/>
+		<listElementString key="turnstile" value="no"/>
+		<listElementString key="bump_gate" value="yes"/>
+		<listElementString key="mound" value="no"/>
+		<listElementString key="chicane" value="yes"/>
+		<listElementString key="ditch" value="no"/>
+		<listElementString key="chain" value="no"/>
+		<listElementString key="swing_gate" value="no"/>
+		<listElementString key="cord" value="no"/>
+		<listElementString key="door" value="no"/>
+		<listElementString key="dyke_opening" value="yes"/>
+		<listElementString key="wall" value="no"/>
+		<listElementString key="tree" value="no"/>
+		<listElementString key="trees" value="no"/>
+		<listElementString key="fallen_tree" value="no"/>
+		<listElementString key="stones" value="no"/>
+		<listElementString key="revolving_door" value="no"/>
+		<listElementString key="Geländer" value="no"/>
+		<listElementString key="sign_post" value="yes"/>
+		<!--hard-coded: <listElementString key="else" value="unknown"/>-->
+	</access_barrier_restrictions>
+	<!--
+	The parameter access_barrier_restrictions_interpretation specifies how the access restriction values of barriers are interpreted.
+	See 
+		- http://wiki.openstreetmap.org/wiki/Key:barrier
+		- http://wiki.openstreetmap.org/wiki/Key:access
+		- http://wiki.openstreetmap.org/wiki/Computing_access_restrictions#Algorithm
+	The list element key is a value (e.g. 'yes', 'no', 'permissive', 'destination', ...) of the access OSM tags (e.g. 'access', 'motorcar', 'bicycle').
+	The list element value can only be 'yes' or 'no'.
+		'yes' indicates that this barrier is traversable.
+		'no' indicates that this barrier is restricted.
+	Example:
+		Extract from OSM data:
+			<tag k="barrier" v="gate"/>
+			<tag k="access" v="private"/>
+		Extract from parameters:
+			<listElementNoYes key="private" value="no"/>
+		Result:
+			This barrier ('gate') is restricted ('private' => 'no').
+	-->
+	<access_barrier_restrictions_interpretation>
+		<listElementNoYes key="no" value="no"/>
+		<listElementNoYes key="destination" value="no"/>
+		<listElementNoYes key="delivery" value="no"/>
+		<listElementNoYes key="agricultural" value="no"/>
+		<listElementNoYes key="forestry" value="no"/>
+		<listElementNoYes key="private" value="no"/>
+		<listElementNoYes key="yes" value="yes"/>
+		<listElementNoYes key="unknown" value="no"/>
+		<listElementNoYes key="designated" value="yes"/>
+		<listElementNoYes key="official" value="yes"/>
+		<listElementNoYes key="permissive" value="yes"/>
+		<!--default: <listElementNoYes key="else" value="no"/>-->
+	</access_barrier_restrictions_interpretation>
+	<!--
+	The parameter slowDown_barrier_restrictions specifies if a (traversable) barrier slows down the drive time.
+	The list element key is a value of the OSM tag 'barrier'.
+	The list element value can only be 'yes' or 'no'.
+	If a route goes through a (traversable) barrier, then the delay (see parameter driveTime_slowDown_delay -> barrierDelayConstant) is added to the normal drive time.
+	This parameter is used to fill the slowDown field of the feature class barriers.
+	-->
+	<slowDown_barrier_restrictions>
+		<listElementNoYes key="cattle_grid" value="no"/>
+		<listElementNoYes key="sally_port" value="yes"/>
+		<listElementNoYes key="toll_booth" value="yes"/>
+		<listElementNoYes key="bollard" value="yes"/>
+		<listElementNoYes key="pollard" value="yes"/>
+		<listElementNoYes key="cycle_barrier" value="yes"/>
+		<listElementNoYes key="block" value="yes"/>
+		<listElementNoYes key="stoneblocks" value="yes"/>
+		<listElementNoYes key="entrance" value="yes"/>
+		<listElementNoYes key="exit" value="no"/>
+		<listElementNoYes key="gate" value="yes"/>
+		<listElementNoYes key="gate;cattle_grid" value="yes"/>
+		<listElementNoYes key="lift_gate" value="yes"/>
+		<listElementNoYes key="gate:lift" value="yes"/>
+		<listElementNoYes key="bar" value="yes"/>
+		<listElementNoYes key="stile" value="yes"/>
+		<listElementNoYes key="yes" value="yes"/>
+		<listElementNoYes key="small_fence" value="yes"/>
+		<listElementNoYes key="fence" value="yes"/>
+		<listElementNoYes key="kissing_gate" value="yes"/>
+		<listElementNoYes key="hampshire_gate" value="yes"/>
+		<listElementNoYes key="rotating_gate" value="yes"/>
+		<listElementNoYes key="spikes" value="yes"/>
+		<listElementNoYes key="turnstile" value="yes"/>
+		<listElementNoYes key="bump_gate" value="yes"/>
+		<listElementNoYes key="mound" value="yes"/>
+		<listElementNoYes key="chicane" value="yes"/>
+		<listElementNoYes key="ditch" value="yes"/>
+		<listElementNoYes key="chain" value="yes"/>
+		<listElementNoYes key="swing_gate" value="yes"/>
+		<listElementNoYes key="cord" value="yes"/>
+		<listElementNoYes key="door" value="yes"/>
+		<listElementNoYes key="dyke_opening" value="no"/>
+		<listElementNoYes key="wall" value="yes"/>
+		<listElementNoYes key="tree" value="yes"/>
+		<listElementNoYes key="trees" value="yes"/>
+		<listElementNoYes key="fallen_tree" value="yes"/>
+		<listElementNoYes key="stones" value="yes"/>
+		<listElementNoYes key="revolving_door" value="yes"/>
+		<listElementNoYes key="Geländer" value="yes"/>
+		<listElementNoYes key="sign_post" value="no"/>
+		<!--hard-coded: <listElementNoYes key="else" value="yes"/>-->
+	</slowDown_barrier_restrictions>
+	<!--
+	The parameter access_highway_restrictions provides the default access restrictions for highways.
+	See 
+		- http://wiki.openstreetmap.org/wiki/Key:highway
+		- http://wiki.openstreetmap.org/wiki/Key:access
+		- http://wiki.openstreetmap.org/wiki/Computing_access_restrictions#Algorithm
+	The list element key is a value of the OSM tag 'highway' (in some special cases it is the value of the OSM tags 'construction' or 'proposed').
+	The list element value defines the default access value for this highway, e.g. 'yes', 'no', 'permissive', 'destination', ...
+	-->
+	<access_highway_restrictions>
+		<listElementString key="motorway" value="yes"/>
+		<listElementString key="motorway_link" value="yes"/>
+		<listElementString key="motorway_junction" value="yes"/>
+		<listElementString key="trunk" value="yes"/>
+		<listElementString key="trunk_link" value="yes"/>
+		<listElementString key="primary" value="yes"/>
+		<listElementString key="primary_link" value="yes"/>
+		<listElementString key="secondary" value="yes"/>
+		<listElementString key="secondary_link" value="yes"/>
+		<listElementString key="tertiary" value="yes"/>
+		<listElementString key="tertiary_link" value="yes"/>
+		<listElementString key="unclassified" value="yes"/>
+		<listElementString key="residential" value="yes"/>
+		<listElementString key="road" value="yes"/>
+		<listElementString key="living_street" value="yes"/>
+		<listElementString key="driveway" value="no"/>
+		<listElementString key="bus_guideway" value="no"/>
+		<listElementString key="bus_stop" value="no"/>
+		<listElementString key="path" value="no"/>
+		<listElementString key="bridleway" value="no"/>
+		<listElementString key="cycleway" value="no"/>
+		<listElementString key="footway" value="no"/>
+		<listElementString key="footpath" value="no"/>
+		<listElementString key="pedestrian" value="no"/>
+		<listElementString key="service" value="yes"/>
+		<listElementString key="track" value="yes"/>
+		<listElementString key="byway" value="yes"/>
+		<listElementString key="ford" value="yes"/>
+		<listElementString key="steps" value="no"/>
+		<listElementString key="crossing" value="no"/>
+		<listElementString key="sidewalk" value="no"/>
+		<listElementString key="turning_circle" value="yes"/>
+		<listElementString key="elevator" value="no"/>
+		<listElementString key="ramp" value="no"/>
+		<listElementString key="platform" value="no"/>
+		<listElementString key="escalator" value="no"/>
+		<listElementString key="virtual_connection" value="no"/>
+		<listElementString key="abandoned" value="no"/>
+		<listElementString key="yes" value="yes"/>
+		<listElementString key="access" value="yes"/>
+		<listElementString key="no" value="no"/>
+		<listElementString key="unsurfaced" value="yes"/><!-- It correspons with the tag combination highway=road and surface=unpaved. -->
+		<listElementString key="razed" value="no"/>
+		<listElementString key="services" value="no"/><!-- This does not characterize a street. It's an area. -->
+		<listElementString key="rest_area" value="no"/><!-- This does not characterize a street. It's an area. -->
+		<listElementString key="disused" value="no"/>
+		<listElementString key="footway_gone" value="no"/>
+		<listElementString key="trail" value="no"/>
+		<listElementString key="emergency_access_point" value="yes"/>
+		<!--hard-coded: <listElementString key="else" value="unknown"/>-->
+	</access_highway_restrictions>
+	<!--
+	The parameter access_highway_restrictions_interpretation specifies how the access restriction values of highways are interpreted.
+	See 
+		- http://wiki.openstreetmap.org/wiki/Key:highway
+		- http://wiki.openstreetmap.org/wiki/Key:access
+		- http://wiki.openstreetmap.org/wiki/Computing_access_restrictions#Algorithm
+	The list element key is a value (e.g. 'yes', 'no', 'permissive', 'destination', ...) of the access OSM tags (e.g. 'access', 'motorcar', 'bicycle').
+	The list element value can only be 'yes' or 'no'.
+		'yes' indicates that this highway is traversable.
+		'no' indicates that this highway is restricted.
+	Example:
+		Extract from OSM data:
+			<tag k="highway" v="residential"/>
+			<tag k="access" v="permissive"/>
+		Extract from parameters:
+			<listElementNoYes key="permissive" value="yes"/>
+		Result:
+			This highway ('residential') is traversable ('permissive' => 'yes').
+	-->
+	<access_highway_restrictions_interpretation>
+		<listElementNoYes key="no" value="no"/>
+		<listElementNoYes key="destination" value="no"/>
+		<listElementNoYes key="delivery" value="no"/>
+		<listElementNoYes key="agricultural" value="no"/>
+		<listElementNoYes key="forestry" value="no"/>
+		<listElementNoYes key="private" value="no"/>
+		<listElementNoYes key="yes" value="yes"/>
+		<listElementNoYes key="unknown" value="yes"/>
+		<listElementNoYes key="designated" value="yes"/>
+		<listElementNoYes key="official" value="yes"/>
+		<listElementNoYes key="permissive" value="yes"/>
+		<!--default: <listElementNoYes key="else" value="yes"/>-->
+	</access_highway_restrictions_interpretation>
+	<!--
+	The parameter parameter access_highway_tracktype_restrictions specifies if a highway with a the OSM tag 'tracktype' is restricted.
+	See
+		- http://wiki.openstreetmap.org/wiki/Key:tracktype
+	The list element key is a value of the OSM tag 'tracktype' (e.g. grade1, grade2, grade3, ...).
+	The list element value can only be 'yes' or 'no'.
+		'yes' indicates that this highway is traversable.
+		'no' indicates that this highway is restricted. 
+	-->
+	<access_highway_tracktype_restrictions>
+		<listElementNoYes key="grade1" value="yes"/>
+		<listElementNoYes key="grade2" value="yes"/>
+		<listElementNoYes key="grade3" value="yes"/>
+		<listElementNoYes key="grade4" value="yes"/>
+		<listElementNoYes key="grade5" value="no"/>
+		<!--default: <listElementNoYes key="else" value="yes"/>-->
+	</access_highway_tracktype_restrictions>
+	<!--
+	The parameter driveTimeFactors_highway_tracktype specifies how much longer (or shorter) the drive time is
+	if the vehicle passes a highway with the OSM tag 'tracktype'.
+	See
+		- http://wiki.openstreetmap.org/wiki/Key:tracktype
+	The list element key is a value of the OSM tag 'tracktype' (e.g. grade1, grade2, grade3, ...).
+	The list element value is a scalar factor which is multiplied by the normal drive time of the current highway.
+	-->
+	<driveTimeFactors_highway_tracktype>
+		<listElementFloat key="grade1" value="1"/>
+		<listElementFloat key="grade2" value="1.25"/>
+		<listElementFloat key="grade3" value="1.5"/>
+		<listElementFloat key="grade4" value="2"/>
+		<listElementFloat key="grade5" value="1"/>
+		<!--default: <listElementFloat key="else" value="1"/>-->
+	</driveTimeFactors_highway_tracktype>
+	<!--
+	The parameter parameter access_highway_surface_restrictions specifies if a highway with a the OSM tag 'surface' is restricted.
+	See
+		- http://wiki.openstreetmap.org/wiki/Key:surface
+	The list element key is a value of the OSM tag 'surface' (e.g. paved, unpaved, asphalt, ...).
+	The list element value can only be 'yes' or 'no'.
+		'yes' indicates that this highway is traversable.
+		'no' indicates that this highway is restricted. 
+	-->
+	<access_highway_surface_restrictions>
+		<listElementNoYes key="paved" value="yes"/>
+		<listElementNoYes key="unpaved" value="yes"/>
+		<listElementNoYes key="asphalt" value="yes"/>
+		<listElementNoYes key="compacted" value="yes"/>
+		<listElementNoYes key="concrete" value="yes"/>
+		<listElementNoYes key="concrete:plates" value="yes"/>
+		<listElementNoYes key="concrete:lanes" value="yes"/>
+		<listElementNoYes key="cobblestone" value="yes"/>
+		<listElementNoYes key="cobblestone:flatted" value="yes"/>
+		<listElementNoYes key="paving_stones" value="yes"/>
+		<listElementNoYes key="paving_stones:30" value="yes"/>
+		<listElementNoYes key="paving_stones:20" value="yes"/>
+		<listElementNoYes key="grass_paver" value="yes"/>
+		<listElementNoYes key="gravel" value="yes"/>
+		<listElementNoYes key="fine_gravel" value="yes"/>
+		<listElementNoYes key="pebblestone" value="yes"/>
+		<listElementNoYes key="sand" value="yes"/>
+		<listElementNoYes key="dirt" value="yes"/>
+		<listElementNoYes key="earth" value="no"/>
+		<listElementNoYes key="ground" value="no"/>
+		<listElementNoYes key="grass" value="no"/>
+		<listElementNoYes key="mud" value="no"/>
+		<listElementNoYes key="wood" value="no"/>
+		<listElementNoYes key="metal" value="yes"/>
+		<listElementNoYes key="tartan" value="no"/>
+		<listElementNoYes key="artificial_turf" value="no"/>
+		<!--default: <listElementNoYes key="else" value="yes"/>-->
+	</access_highway_surface_restrictions>
+	<!--
+	The parameter driveTimeFactors_highway_surface specifies how much longer (or shorter) the drive time is
+	if the vehicle passes a highway with the OSM tag 'surface'.
+	See
+		- http://wiki.openstreetmap.org/wiki/Key:surface
+	The list element key is a value of the OSM tag 'surface' (e.g. paved, unpaved, asphalt, ...).
+	The list element value is a scalar factor which is multiplied by the normal drive time of the current highway.
+	-->
+	<driveTimeFactors_highway_surface>
+		<listElementFloat key="paved" value="1"/>
+		<listElementFloat key="unpaved" value="2"/>
+		<listElementFloat key="asphalt" value="1"/>
+		<listElementFloat key="compacted" value="1.25"/>
+		<listElementFloat key="concrete" value="1"/>
+		<listElementFloat key="concrete:plates" value="1"/>
+		<listElementFloat key="concrete:lanes" value="1"/>
+		<listElementFloat key="cobblestone" value="1"/>
+		<listElementFloat key="cobblestone:flatted" value="1"/>
+		<listElementFloat key="paving_stones" value="1"/>
+		<listElementFloat key="paving_stones:30" value="1"/>
+		<listElementFloat key="paving_stones:20" value="1"/>
+		<listElementFloat key="grass_paver" value="1"/>
+		<listElementFloat key="gravel" value="2"/>
+		<listElementFloat key="fine_gravel" value="2"/>
+		<listElementFloat key="pebblestone" value="2"/>
+		<listElementFloat key="sand" value="2"/>
+		<listElementFloat key="dirt" value="2"/>
+		<listElementFloat key="earth" value="1"/>
+		<listElementFloat key="ground" value="1"/>
+		<listElementFloat key="grass" value="2"/>
+		<listElementFloat key="mud" value="1"/>
+		<listElementFloat key="wood" value="1"/>
+		<listElementFloat key="metal" value="1.5"/>
+		<listElementFloat key="tartan" value="1"/>
+		<listElementFloat key="artificial_turf" value="1"/>
+		<!--default: <listElementFloat key="else" value="1"/>-->
+	</driveTimeFactors_highway_surface>
+	<!--
+	The parameter parameter access_highway_smoothness_restrictions specifies if a highway with a the OSM tag 'smoothness' is restricted.
+	See
+		- http://wiki.openstreetmap.org/wiki/Key:smoothness
+	The list element key is a value of the OSM tag 'smoothness' (e.g. excellent, good, impassable, ...).
+	The list element value can only be 'yes' or 'no'.
+		'yes' indicates that this highway is traversable.
+		'no' indicates that this highway is restricted. 
+	-->
+	<access_highway_smoothness_restrictions>
+		<listElementNoYes key="excellent" value="yes"/>
+		<listElementNoYes key="good" value="yes"/>
+		<listElementNoYes key="intermediate" value="yes"/>
+		<listElementNoYes key="bad" value="yes"/>
+		<listElementNoYes key="very_bad" value="yes"/>
+		<listElementNoYes key="horrible" value="no"/>
+		<listElementNoYes key="very_horrible" value="no"/>
+		<listElementNoYes key="impassable" value="no"/>
+		<!--default: <listElementNoYes key="else" value="yes"/>-->
+	</access_highway_smoothness_restrictions>
+	<!--
+	The parameter driveTimeFactors_highway_smoothness specifies how much longer (or shorter) the drive time is
+	if the vehicle passes a highway with the OSM tag 'smoothness'.
+	See
+		- http://wiki.openstreetmap.org/wiki/Key:smoothness
+	The list element key is a value of the OSM tag 'smoothness' (e.g. excellent, good, impassable, ...).
+	The list element value is a scalar factor which is multiplied by the normal drive time of the current highway.
+	-->
+	<driveTimeFactors_highway_smoothness>
+		<listElementFloat key="excellent" value="1"/>
+		<listElementFloat key="good" value="1"/>
+		<listElementFloat key="intermediate" value="1.25"/>
+		<listElementFloat key="bad" value="1.5"/>
+		<listElementFloat key="very_bad" value="1.75"/>
+		<listElementFloat key="horrible" value="1"/>
+		<listElementFloat key="very_horrible" value="1"/>
+		<listElementFloat key="impassable" value="1"/>
+		<!--default: <listElementFloat key="else" value="1"/>-->
+	</driveTimeFactors_highway_smoothness>
+	<!--
+	The parameter oneway_highway_implications specifies in which cases highways are interpreted as oneways.
+	Sometimes the OSM tag 'oneway' must not be explicitly added to a highway although the highway is a oneway (e.g. highway=motorway).
+	See http://wiki.openstreetmap.org/wiki/Key:oneway
+	This parameter lists cases and defines how these cases are interpreted.
+	A case consists of a list of key-value pairs and the attribute interpret_as_oneway.
+	If the current highway matches one of these cases, then the attribute interpret_as_oneway is used to define if this highway is interpreted as a oneway.
+	The list element values can have the following values:
+		- "": The OSM tag does not exist or its value is empty ("").
+		- *: The OSM tag exists and any value is allowed. The value must not be "".
+		- another value: The OSM tag exists and has this value.
+	Example:
+		Extract from OSM data:
+			<tag k="highway" v="tertiary"/>
+			<tag k="junction" v="roundabout"/>
+		Extract from parameters:
+			<caseOneway interpret_as_oneway="yes">
+				<listElementString key="highway" value="*"/>
+				<listElementString key="oneway" value=""/>
+				<listElementString key="junction" value="roundabout"/>
+			</caseOneway>
+		Result:
+			This highway matches this case. The highway is interpreted as a oneway.
+	-->
+	<oneway_highway_implications>
+		<!--motorcar:-->
+		<!--The following OSM tags are analyzed to interpret if the current highway is a oneway: highway, oneway and junction.-->
+		<!--All other OSM tags are ignored (e.g. cycleway, cycleway:left, cycleway_right, oneway:bicycle, ...).-->
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="motorway"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value=""/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="motorway_link"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value=""/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="motorway_junction"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value=""/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="trunk_link"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value=""/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="roundabout"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value=""/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->	
+			<listElementString key="highway" value="mini_roundabout"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value=""/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value="roundabout"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes">
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value=""/>
+			<listElementString key="junction" value="yes"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="no"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="no"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="no"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="false"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="no"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="0"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="yes"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="true"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="1"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="-1"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="-1"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="-1"><!--recommended-->
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="reverse"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="yes">
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="undefined"/>
+		</caseOneway>
+		<caseOneway interpret_as_oneway="no">
+			<listElementString key="highway" value="*"/>
+			<listElementString key="oneway" value="no;yes"/>
+		</caseOneway>
+		<!--hard-coded: else
+		<caseOneway interpret_as_oneway="no">
+			<listElementString key="highway" value="*"/>
+			all other keys of the caseOneways before:
+			<listElementString key="..." value=""/>
+			maybe etc.
+		</caseOneway>-->
+	</oneway_highway_implications>
+	<!--
+	The parameter maxspeed_highway_implications specifies the maxspeed implications of highways.
+	These implications are used if a highway does not have the OSM tag maxspeed.
+	See http://wiki.openstreetmap.org/wiki/Key:maxspeed
+	Depending on the country the default maxspeeds are different (see http://wiki.openstreetmap.org/wiki/OSM_tags_for_routing/Maxspeed).
+	The value 'null' if there is no maximum speed.
+	The default unit is km/h if there is no unit.
+	If the maxspeed value has a unit (e.g. maxspeed=50 mph), then the parameter speed_highway_units is used to convert this speed into km/h.
+	Instead of numeric constants variables can be used (see parameter speed_highway_variables).
+	The maximum speed is used to calculate the drive time if it is smaller than the average speed (avspeed_highway_implications).
+	-->
+	<maxspeed_highway_implications>
+		<listElementString key="motorway" value="null"/>
+		<listElementString key="motorway_link" value="80"/>
+		<listElementString key="motorway_junction" value="80"/>
+		<listElementString key="trunk" value="50"/>
+		<listElementString key="trunk_link" value="50"/>
+		<listElementString key="primary" value="50"/>
+		<listElementString key="primary_link" value="50"/>
+		<listElementString key="secondary" value="50"/>
+		<listElementString key="secondary_link" value="50"/>
+		<listElementString key="tertiary" value="50"/>
+		<listElementString key="tertiary_link" value="50"/>
+		<listElementString key="unclassified" value="50"/>
+		<listElementString key="road" value="50"/>
+		<listElementString key="residential" value="50"/>
+		<listElementString key="living_street" value="4"/>
+		<listElementString key="driveway" value="null"/>
+		<listElementString key="bus_guideway" value="null"/>
+		<listElementString key="bus_stop" value="null"/>
+		<listElementString key="service" value="null"/>
+		<listElementString key="footway" value="null"/>
+		<listElementString key="footpath" value="null"/>
+		<listElementString key="steps" value="null"/>
+		<listElementString key="track" value="null"/>
+		<listElementString key="byway" value="null"/>
+		<listElementString key="pedestrian" value="null"/>
+		<listElementString key="cycleway" value="null"/>
+		<listElementString key="bridleway" value="null"/>
+		<listElementString key="path" value="null"/>
+		<listElementString key="elevator" value="null"/>
+		<listElementString key="ramp" value="null"/>
+		<listElementString key="crossing" value="null"/>
+		<listElementString key="sidewalk" value="null"/>
+		<listElementString key="turning_circle" value="null"/>
+		<listElementString key="platform" value="null"/>
+		<listElementString key="escalator" value="null"/>
+		<listElementString key="virtual_connection" value="null"/>
+		<listElementString key="abandoned" value="null"/>
+		<listElementString key="ford" value="null"/>
+		<listElementString key="undefined" value="null"/>
+		<listElementString key="yes" value="null"/>
+		<listElementString key="access" value="null"/>
+		<listElementString key="no" value="null"/>
+		<listElementString key="unsurfaced" value="null"/><!-- It correspons with the tag combination highway=road and surface=unpaved. -->
+		<listElementString key="razed" value="null"/>
+		<listElementString key="services" value="null"/><!-- This does not characterize a street. It's an area. -->
+		<listElementString key="rest_area" value="null"/><!-- This does not characterize a street. It's an area. -->
+		<listElementString key="disused" value="null"/>
+		<listElementString key="footway_gone" value="null"/>
+		<listElementString key="trail" value="null"/>
+		<listElementString key="emergency_access_point" value="null"/>
+		<!--default: <listElementString key="else" value="null"/>-->
+	</maxspeed_highway_implications>
+	<!--
+	The parameter avspeed_highway_implications defines the average speed of highways.
+	Unlike the maxspeed (maxspeed_highway_implications), the speed value must not be 'null'.
+	The default unit is km/h if there is no unit.
+	If the avspeed value has a unit (e.g. avspeed=50 mph), then the parameter speed_highway_units is used to convert this speed into km/h.
+	Instead of numbers variables can be used (see parameter speed_highway_variables).
+	The average speed is used to calculate the drive time if it is smaller than the maximum speed (maxspeed_highway_implications).
+	-->
+	<avspeed_highway_implications>
+		<listElementString key="motorway" value="110"/>
+		<listElementString key="motorway_link" value="90"/>
+		<listElementString key="motorway_junction" value="90"/>
+		<listElementString key="trunk" value="90"/>
+		<listElementString key="trunk_link" value="70"/>
+		<listElementString key="primary" value="70"/>
+		<listElementString key="primary_link" value="60"/>
+		<listElementString key="secondary" value="60"/>
+		<listElementString key="secondary_link" value="50"/>
+		<listElementString key="tertiary" value="55"/>
+		<listElementString key="tertiary_link" value="45"/>
+		<listElementString key="unclassified" value="50"/>
+		<listElementString key="road" value="50"/>
+		<listElementString key="residential" value="40"/>
+		<listElementString key="living_street" value="4"/>
+		<listElementString key="driveway" value="50"/>
+		<listElementString key="bus_guideway" value="50"/>
+		<listElementString key="bus_stop" value="50"/>
+		<listElementString key="service" value="30"/>
+		<listElementString key="footway" value="5"/>
+		<listElementString key="footpath" value="5"/>
+		<listElementString key="steps" value="0"/>
+		<listElementString key="track" value="10"/>
+		<listElementString key="byway" value="15"/>
+		<listElementString key="pedestrian" value="5"/>
+		<listElementString key="cycleway" value="15"/>
+		<listElementString key="bridleway" value="15"/>
+		<listElementString key="path" value="8"/>
+		<listElementString key="elevator" value="0"/>
+		<listElementString key="ramp" value="0"/>
+		<listElementString key="crossing" value="5"/>
+		<listElementString key="sidewalk" value="5"/>
+		<listElementString key="turning_circle" value="5"/>
+		<listElementString key="platform" value="5"/>
+		<listElementString key="escalator" value="1.8"/>
+		<listElementString key="virtual_connection" value="0"/>
+		<listElementString key="abandoned" value="50"/>
+		<listElementString key="ford" value="5"/>
+		<listElementString key="yes" value="50"/>
+		<listElementString key="access" value="50"/>
+		<listElementString key="no" value="0"/>
+		<listElementString key="unsurfaced" value="25"/><!-- It correspons with the tag combination highway=road and surface=unpaved. -->
+		<listElementString key="razed" value="0"/>
+		<listElementString key="services" value="0"/><!-- This does not characterize a street. It's an area. -->
+		<listElementString key="rest_area" value="0"/><!-- This does not characterize a street. It's an area. -->
+		<listElementString key="undefined" value="50"/>
+		<listElementString key="disused" value="5"/>
+		<listElementString key="footway_gone" value="5"/>
+		<listElementString key="trail" value="5"/>
+		<listElementString key="emergency_access_point" value="50"/>
+		<!--default: <listElementString key="else" value="50"/>-->
+	</avspeed_highway_implications>
+	<!--
+	The parameter speed_highway_variables defines variables which can used instead of speed values.
+	See http://wiki.openstreetmap.org/wiki/Proposed_features/trafficzone
+	This parameter is used for maximum and average speeds.
+	Example:
+		Extract from OSM data:
+			<tag k="highway" v="primary"/>
+			<tag k="maxspeed" v="DE:urban"/>
+		Extract from parameters:
+			<listElementString key="DE:urban" value="50"/>
+		Result:
+			The maxspeed is 50.
+	-->
+	<speed_highway_variables>
+		<listElementString key="variable" value="null"/>
+		<listElementString key="DE:motorway" value="null"/>
+		<listElementString key="DE:urban" value="50"/>
+		<listElementString key="DE.urban" value="50"/>
+		<listElementString key="DE:rural" value="100"/>
+		<listElementString key="DE:walk" value="10"/>
+		<listElementString key="walk" value="10"/>
+		<listElementString key="DE:living_street" value="10"/>
+		<listElementString key="unrestricted" value="null"/>
+		<listElementString key="none" value="null"/>
+		<listElementString key="no" value="null"/>
+		<listElementString key="moderate" value="30"/>
+		<listElementString key="moderat" value="30"/>
+		<listElementString key="signals" value="null"/>
+	</speed_highway_variables>
+	<!--
+	The parameter speed_highway_units defines conversion factors to convert speed units into the default speed unit km/h.
+	This parameter is used for maximum speed and average speed.
+	If the speed value has a unit (e.g. maxspeed=50 mph), then this parameter is used to convert the speed into km/h.
+	Example:
+		maxspeed=50 mph
+		=> 50 mph * 1.609 = 80.45 km/h
+	-->
+	<speed_highway_units>
+		<listElementFloat key="km/h" value="1"/>
+		<listElementFloat key="kmh" value="1"/>
+		<listElementFloat key="kmph" value="1"/>
+		<listElementFloat key="kph" value="1"/>
+		<listElementFloat key="mph" value="1.609"/>
+		<listElementFloat key="knots" value="1.852"/>
+	</speed_highway_units>
+	<!--
+	The parameter length_highway_units defines conversion factors to convert length units into the default length unit m.
+	This parameter is used for the OSM tag maxheight.
+	If the length value has a unit (e.g. maxheight=13 ft), then this is used to convert the speed into km/h.
+	Example:
+		maxheight=13 ft
+		=> 13 ft * 0.3048 = 3.96 m
+	-->
+	<length_highway_units>
+		<listElementFloat key="m" value="1"/>
+		<listElementFloat key="metre" value="1"/>
+		<listElementFloat key="metres" value="1"/>
+		<listElementFloat key="ft" value="0.3048"/>
+		<listElementFloat key="feet" value="0.3048"/>
+	</length_highway_units>
+	<!--
+	The parameter weight_highway_units defines conversion factors to convert weight units into the default weight unit t.
+	This parameter is used for the OSM tag maxweight.
+	If the weight value has a unit (e.g. maxweight=50 mph), then this parameter is used to convert the weight into km/h.
+	Example:
+		maxweight=3500 kg
+		=> 3500 kg * 0.001 = 3.5 t
+	-->
+	<weight_highway_units>
+		<listElementFloat key="t" value="1"/>
+		<listElementFloat key="kg" value="0.001"/>
+	</weight_highway_units>
+	<!--
+	The parameter driveTime_slowDown_delay is used to specify how much longer the drive time is 
+	if the vehicle passes a highway with traffic_calming or a barrier.
+	The attribute highwaySlowDownFactor is a scalar factor which is multiplied by the normal drive time of the current highway.
+	The attribute barrierDelayConstant is a time which is added to the normal drive time (unit: minutes).
+	-->
+	<driveTime_slowDown_delay barrierDelayConstant="0.1" highwaySlowDownFactor="1.25" />
+</parameters>

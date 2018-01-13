@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Geovisualisierung Portfolio</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" />
+
+  <script type="text/javascript" src="js/OpenLayers.js"></script>
+  <script type="text/javascript" src="js/OpenStreetMap.js"></script>
+  <script type="text/javascript" src="js/proj4.js"></script>
+  <script type="text/javascript" src="js/styleMap.js"></script>
+  <script defer="defer" type="text/javascript" src="js/motorcar.js"></script>
+</head>
+
+<body onload="init();">
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <h1>Geovisualisierung <a href="#">Portfolio</a></h1>
+        <div class="slogan"></div>
+      </div>
+
+	  <!-- Navigationbar -->
+	  <nav>
+	    <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../ueb1/ueb1.html">HTML & D3</a></li>
+          <li><a href="../ueb2/ueb2.html">Hochwasservisualisierung</a></li>
+		  <li class="current"><a href="../ueb3/osm.html">OpenStreetMap</a>
+			<ul>
+				<li class="currentsub"><a href="../ueb3/ueb3.html">Teil 1</a></li>
+				<li><a href="../ueb4/ueb4.html">Teil 2</a></li>
+				<li><a href="../ueb5/ueb5.html">Teil 3</a></li>
+			</ul>
+		  </li>
+		</ul>
+	  </nav>
+    </div>
+    
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1>Visualisierung von OSM Daten mit Open Layers</h1>
+        <p>Diese Karte zeigt das Verkehrsnetz von Trier aus eine, OSM Datensatz (Abb.7). Dabei kann zwischen drei Visualisierungsmodi gewählt werden. <i>Car</i> stellt nur die für Autos zugänglichen, <i>bike</i> auch die für Fahrradfahrer zugänglichen Verkehrswege dar.</p>
+		<h2>Wählen Sie ein Visualisierungsformat aus:</h2>
+		<form id="OSMStyle" style="font-family:Arial,sans-serif;"><!--Hier werden die Auswahlbuttons für die Visualisierungen definiert-->
+			<input type="radio" name="style" value="0" onclick="javascript:changeStyle(value)"> CAR<!-- per onClick JS Aufruf werden OSM-Daten mit 	anderer Visualisierung dargestellt; Regeln siehe styleMap.js-->
+			<input type="radio" name="style" value="2" onclick="javascript:changeStyle(value)"> BIKE
+			<input type="radio" name="style" value="1" checked onclick="javascript:changeStyle(value)"> Default
+		</form><!--"checked" gibt an, dass dieser Auswahlbutton bereits ausgewählt geladen wird, da dies die Standardvisualisierung ist-->
+		<div align="middle">
+			<table width="900px" border="0"><!-- Karte und Anzeigen werden in Tabelle gelayoutet-->
+				<tr>
+					<td colspan="2" width="900" height="80%">
+						<div id="map" style="width:900px; height:450px; border:1px solid #000"></div>
+					</td>  <!-- Einbinden OpenLayers Map in HTML Ger??-->
+				</tr>
+				<tr>
+					<td valign="top" height="50px"><u>Koordinatenangabe:</u>
+						<div id="external_control"style="font-size: 15px; border:0px solid #000"></div>
+					</td>  <!--UTM Koordanzeige -->
+				</tr>
+				<tr>
+					<td valign="top"><u>OnClick Info:</u>
+						<div align="block" id="outputid" style="font-size: 15px;color:#F14E23; border:0px solid #000"></div>
+					</td> <!--Kachelanzeige*-->
+				</tr>
+			</table>
+		</div><br>
+		<p align="middle">Abb. 7: Visualisierung von OSM Daten in verschiedenen Darstellungsmodi</p> 
+		<h2>Dokumentation</h2>
+		<p>Die dargestellte Karte wurde mit der JavaScript-Bibliothek <a href="http://openlayers.org/">OpenLayers</a> erstellt. 2006 veröffentlicht ermöglicht OpenLayers die Darstellung von räumlichen Vektordaten im Internetbrowser und die Erstellung von WebGIS-Anwendung. Im Normalfall werden die Geodaten über einen Webserver bereitgestellt. Da es mit Firefox jedoch auch möglich ist, lokal gepseicherte OSM-Daten im Webbrowser darzustellen, wurde für diese Anwendung kein eigener Webserver eingerichtet. Die Daten des Straßennetzes sind als GeoJSON Datei im Verzeichnis der Webseite hinterlegt und werden durch JavaScript im HTML-Dokument eingebunden. GeoJSON wurde hier verwendet, da es das platzsparendste und effizienteste Dateiformat für die Darstellung von Geodaten im Webbrowser ist.  
+        </p>
+        <p>Über die Funktion init(), welche im body-Element des HTML-Dokuments aufgerufen wird, wird die Hintergrundkarte und das Straßennetz geladen. Wenn die Darstellungsoptionen geändert wird, wird die Funktion <i>changeStyle</i> aufgerufen, welche die Darstellung des Wegenetzes analog zur gewählten Option aktualisiert. Die Darstellungsspezifikation der einzelnen Verkehrswegeklassen wird in der Datei <i>styleMap.js</i> festgelegt und vom ausführenden JavaScript abgerufen. Durch das Bewegen des Cursors über die Karte werden im Feld <i>Koordinatenangabe</i> die geographischen Koordinaten der aktuellen Position angegeben. Dies geschieht über die Kontrollfunktion <i>externalcontrol</i>. Durch das Klicken auf ein Feature des Straßennetzwerks erscheinen im Feld <i>OnClickInfo</i> Informationen zum ausgewählen Objekt. Dabei greift die Funktion <i>SelectFeature</i> die ID des ausgewählten Features ab, anhand derer die dazugehörigen Informationen aus der GeoJSON-Datei des Straßennetzes abgerufen und an das HTML-Dokument übergeben werden.
+        </p>
+        <h2>Bedeutung in der Geovisualisierung</h2>
+        <p>OpenLayers ist ein mächtiges Werkzeug, um komplexe WebGIS-Anwendungen zu erstellen. Die vielen vorprogrammierten Funktionen, wie Zoom oder Pan, sowie die Möglichkeit eigene Funktionen zu schreiben, bieten eine hohes Maß an Anpassungsfähigkeit und Interaktivität. Abgesehen von der Funktion verschiedene Layer an und auszuschalten bzw. deren Darstellungsoptionen zu ändern (Abb.7) ist die Darstellung der Daten verglichen mit <i>D3</i> jedoch weniger dynamisch. Auf der anderen Seite macht es <i>OpenLayers</i> sehr einfach lokale Geodaten als auch Karten aus WMS oder WFS-Diensten einzubinden. Eine Kombination dieser beiden Bibliotheken würde viele neue Möglichkeiten für die kartographische Darstellung von geowissenschaftlichen Phänomen wie z. Bsp. der <a href="../ueb1/ueb1.html">Visualisierung der E.Coli Belastung</a> eröffnen.</p>
+        <div>
+            <h2>Quellen</h2>
+            <p>Teucher, M. (2015): Vorlesung Geovisualisierung WS 2014/2015. Universität Trier.
+            </p>
+        </div>  
+      </div>
+    </div>
+    <div id="footer">
+      <p>Geovisualisierung | Unviersität Trier | WS 2014/2015 | Dr. A. Müller & M. Teucher | Student: Christina Ludwig (1166542)<br>
+      Design based on &copy;simplestyle_7 <a href="http://www.html5webtemplates.co.uk">from HTML5webtemplates.co.uk</a></p>
+    </div>
+</body>
+</html>

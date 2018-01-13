@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Geovisualisierung Portfolio</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" />
+  
+  <script type="text/javascript" src="js/OpenLayers.js"></script>
+  <script type="text/javascript" src="js/OpenStreetMap.js"></script>
+  <script type="text/javascript" src="js/proj4.js"></script>
+  <script type="text/javascript" src="js/styleMap.js"></script>
+  <script type="text/javascript" src="js/motorcar.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <h1>Geovisualisierung <a href="#">Portfolio</a></h1>
+        <div class="slogan"></div>
+      </div>
+	  
+    <!-- Navigationbar -->
+	  <nav>
+	    <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../ueb1/ueb1.html">HTML & D3</a></li>
+          <li><a href="../ueb2/ueb2.html">Hochwasservisualisierung</a></li>
+		  <li class="current"><a href="../ueb3/osm.html">OpenStreetMap</a>
+  			<ul>
+  				<li><a href="../ueb3/ueb3.html">Teil 1</a></li>
+  				<li><a href="../ueb4/ueb4.html">Teil 2</a></li>
+  				<li class="currentsub"><a href="../ueb5/ueb5.html">Teil 3</a></li>
+  			</ul>
+      </li>
+		</ul>
+	  </nav>
+    </div>
+
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1>Erreichbarkeitsanalyse mittels OSM Daten</h1>
+        <p>Eine weitere Anwendung von routingfähigen OSM Daten ist die Durchführung einer Erreichbarkeitsanalyse. In diesem Beispiel wurde in QGIS ermittelt, welche Gebiete innerhalb von 30 Minuten mit dem Auto vom Hauptbahnhof in Trier erreichbar sind (Abb.10).</p>
+		    <p align="middle"><img src="media/Erreichbarkeitsanalyse.jpeg" alt="Erreichberkeitsanalyse" width="800px"</p>
+        <p align="middle">Abb.10: Erreichbarkeitsanalyse von Trier Hauptbahnhof aus mittels OSM Daten</p>
+        <br><br>
+        <h2>Dokumentation</h2>
+        <p>Zunächst muss in PgAdmin3 ein SQL-Abfrage ausgeführt werden, welche alle Knotenpunkten extrahiert und diese in einer neuen Sicht abspeichert. 
+        <p id="code">create or replace view public.rlp_nodes as
+          select id, st_centroid(st_collect(pt)) as geom <br>
+          from ((select source as id, st_startpoint(geom_way) as pt <br>
+          from public.rlp_2po_4pgr <br>
+          )<br>
+          union<br>
+          (select target as id, st_endpoint(geom_way) as pt<br>
+          from public.rlp_2po_4pgr<br>
+          )<br>
+          ) as foo <br>
+          group by id;<br>
+        </p>
+
+        <p>Mit einer weiteren SQL-Abfrage wird die Reisezeit in m/min berechnet. Dieser Vorgang kann einige Zeit in Anspruch nehmen, mit einem langsamen GIS-Stick sogar noch mehr. Anschließend werden die Verkehrswege und Knotenpunkte als PostGIS-Layer in QGIS importiert. Als letzten Schritt wird im DB-Manager eine SQL-Abfrage ausgeführt, welche alle Punkte ausgibt, welche innerhalb von 30 Minuten vom Anfangspunkt aus erreichbar sind (Abb.11). 
+
+        <p id="code">
+        SELECT *<br>
+        FROM rlp_nodes<br>
+        JOIN<br>
+        (SELECT * FROM pgr_drivingDistance('<br>
+        SELECT id,<br>
+                source,<br>
+                target,<br>
+                traveltime AS cost<br>
+        FROM public.rlp_2po_4pgr',<br>
+                29616,<br>
+                30,<br>
+                false,<br>
+                false)) AS route<br>
+        ON<br>
+        rlp_nodes.id = route.id1;<br>
+        </p>
+
+        <p align="middle"><img src="media/ErreichbarePunkte.jpeg" alt="Erreichbare Punkte von Trier Hbf" width="800px"></p>
+        <p align="middle">Abb.11: Erreichbare Punkte von Trier Hauptbahnhof aus innerhalb von 30 Minuten</p>
+        
+        <p>Die generierten Punkte können mit Hilfe des Interpolations-Plugins von QGIS in eine flächendeckende Darstellung der erreichbaren Gebiete umgewandelt werden. Dabei ist darauf zu achten als Methode das TIN-Verfahren, als Attribut <i>cost</i> und als Zellgröße 20 zu wählen. Zusätzlich lassen sich mit diesem Plugin auch Konturlinien erstellen, welche die erreichbaren Gebiete in einen 5 Minuten-Intervall aufteilen.<br>Bei der Erstellung der Karte kam es zu Problemen beim Export, da die Hintergrundkarte von OSM in manchen Fällen nur teilweise oder gar nicht im exportierten Bild angezeigt wurde. Eine wiederholte Ausführung des Exportes führte letztendlich zum Erfolg, jedoch konnten die Beschriftungselemente der OSM Karte nicht exportiert werden.
+        </p>
+        <div>
+          <h2>Quellen</h2>
+          <p>Teucher, M. (2015): Vorlesung Geovisualisierung WS 2014/2015. Universität Trier.
+          </p>
+        </div> 
+      </div>
+    </div>
+
+    <div id="footer">
+      <p>Geovisualisierung | Unviersität Trier | WS 2014/2015 | Dr. A. Müller & M. Teucher | Student: Christina Ludwig (1166542)<br>
+      Design based on &copy;simplestyle_7 <a href="http://www.html5webtemplates.co.uk">from HTML5webtemplates.co.uk</a></p>
+    </div>
+  </div>
+</body>
+</html>

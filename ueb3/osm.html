@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Geovisualisierung Portfolio</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <h1>Geovisualisierung <a href="#">Portfolio</a></h1>
+        <div class="slogan"></div>
+      </div>
+  	  <!-- Navivationbar -->
+  	  <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../ueb1/ueb1.html">HTML & D3</a></li>
+          <li><a href="../ueb2/ueb2.html">Hochwasservisualisierung</a></li>
+          <li class="current"><a href="../ueb3/osm.html">OpenStreetMap</a>
+            <ul>
+              <li><a href="../ueb3/ueb3.html">Teil 1</a></li>
+              <li><a href="../ueb4/ueb4.html">Teil 2</a></li>
+              <li><a href="../ueb5/ueb5.html">Teil 3</a></li>
+            </ul>
+          </li>
+        </ul>
+  	  </nav>
+    </div>
+
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1>Visualisierung von frei verfügbaren Daten am Beispiel von Open Street Map</h1> 
+		    <div id="description">
+          <p>Open Street Map (OSM) wurde 2004 mit dem Ziel gegründet eine freie Weltkarte zu erschaffen. Dazu sammeln Freiwillige weltweit Daten und stellen diese kostenlos im Internet zur Verfügung. Durch verschiedene OSM Dienstleister oder die Oberpass-API können die Daten heruntergeladen und lizenzfrei verwendet werden.
+          </p>
+          <h2>OSM Speicherformat</h2>
+          <p>Beim OSM Ansatz wird ein Geoobjekt entweder als "node", "way" oder "relation" gespeichert. "Nodes" beschreiben Knoten oder Schnittstellen, während "ways" Strecken darstellen. Unter "relations" versteht man eine Gruppe von "nodes" oder "ways", welche zum selben Objekt beipsielsweise einer Straße gehören. Zudem werden jedem Objekt sogenannte "tags" zugeordnet, welche die Objekteigenschaften näher beschreiben. Ein "tag" besteht hierbei immer aus einem Key-Value-Paar. So können Straßenabschnitte beispielsweise in verschiedene Straßentypen wie "Autobahn" oder "Fahrradweg" unterteilt werden.
+          </p>
+          <h2>Datenaufbereitung für Netzwerkanalyse</h2>
+          <p>OSM Daten sind im Originalzustand nicht routingfähig. Um diese routingfähig zu machen, gibt es eine Vielzahl an frei verfügbaren Anwendung im Internet. So lässt sich mit der Anwendung "OSM2NetworkDataset" beispielsweise aus einem OSM-Datensatz in Verbindung mit einer Parameterdatei eine Geodatenbank mit Netzwerkdatensatz und verschiedenen Feature Classes für die Netzwerkanalyse erstellen. Die Parameterdatei enthält Informationen, welche Fahrzeuge auf welchen Verkehrswegen und mit welcher Geschwindigkeit fahren dürfen. Hierbei werden Beschränkungen, Einbahnstraßen, Barrieren, Abbiege- und Geschwindigkeitsvorschriften berücksichtigt. Da OSM-Daten momentan noch nicht flächendeckend attributiert vorliegen, lässt sich das Routing bislang nur für Auto-, Fahradfahrer und Fußgänger in stadtnahen Gebieten berechnen. 
+          </p>
+          <h2>Speicherformate für dynamische Kartenanwendungen im Internet</h2>
+          <ul>
+            <li>Mapserver: Einrichtung eines Webservers zur Bereitstellung der Daten, da diese in manchen Fällen nicht lokal gespeichert werden können. </li>
+            <li>KML/KMZ: Für die Darstellung in Google Earth</li>
+            <li>Shapefile: Darstellung im Web mit Hilfe von Plugins möglich oder mit der Google Maps Engine</li>
+            <li>GeoJSON: Platzsparendes JavaScript-basiertes Speicherformat</li>
+          </ul>
+
+          </div> 
+          <div>
+            <h2>Quellen</h2>
+            <p>Teucher, M. (2015): Vorlesung Geovisualisierung WS 2014/2015. Universität Trier.
+            </p>
+          </div>  
+
+		    </div>
+      </div>
+    </div>
+    <div id="footer">
+      <p>Geovisualisierung | Unviersität Trier | WS 2014/2015 | Dr. A. Müller & M. Teucher | Student: Christina Ludwig (1166542)<br>
+      Design based on &copy;simplestyle_7 <a href="http://www.html5webtemplates.co.uk">from HTML5webtemplates.co.uk</a></p>
+    </div>
+  </div>
+</body>
+</html>
