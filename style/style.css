@@ -181,7 +181,7 @@ nav ul li a
 { text-decoration: none;
   display: inline;
   color: #333;
-  font: normal 150% 'Yanone Kaffeesatz', sans-serif;
+  font: normal 100% 'Yanone Kaffeesatz', sans-serif;
   float: left; 
   height: 20px;
   padding: 8px 23px 15px 23px;
@@ -219,7 +219,7 @@ nav ul li.current a
   transition:width 200ms ease-in;}
 
 #sub ul li a
-{ font: normal 150% 'Yanone Kaffeesatz', sans-serif;
+{ font: normal 100% 'Yanone Kaffeesatz', sans-serif;
   background: #F14E23;
   background-color: #F14E23;
   opacity:0.7;
