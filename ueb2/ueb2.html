@@ -5,7 +5,7 @@
   <title>Geovisualisierung Portfolio</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
-  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine&amp;v1" />
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
   <link rel="stylesheet" type="text/css" href="../style/style.css" />
@@ -42,32 +42,32 @@
         <!-- insert the page content here -->
         <h1>Kartographische Darstellung von Hochwasserexpositionen am 3D-Stadtmodell</h1> 
 		<div>
-			<p>Basierend auf einem digitalen Geländemodell (DGM) und einem Polygondatensatz der Gebäude  
+			<p>Basierend auf einem digitalen GelÃ¤ndemodell (DGM) und einem Polygondatensatz der GebÃ¤ude  
 			wurden verschiedenen Methoden zur Darstellung des Hochwasserrisikos in der Innenstadt von Trier getestet und miteinander verglichen. 
 			</p>
 		</div>
 		<div>
 			<h2>Erstellung einer Hochwasserrisikokarte in ArcMap</h2>
 			<ol>
-				<li><b>Datenaufbereitung - Korrektur von unnatürlichen Senken</b>
-					<br>Im ersten Schritt wurden unnatürliche Senken, welche häufig in digitalen Geländemodellen durch Messfehler auftreten, korregiert. Mit Hilfe des Werkzeuges "Flow direction" angewendet auf das DGM wird zunächst für jede Rasterzelle des Geländemodells die Fließrichtung ermittelt. Anschließend wurden mit dem Werkzeug "Sink" (Z-Wert = 136) die nicht natürlichen Senken identifiziert und anschließend mit dem Werkzeug "Fill" aufgefüllt.</li>
-				<li><b>Berechnung der einzelnen Pegelstände</b>
-					<br>Ausgehend von einem Pegelnullpunkt von 121 Metern und einem mittleren Wasserstand von 3 Metern wurden in Schritten von 0,5 Metern die einzelnen Pegelstände bis zu einer Höhe von 133 Metern berechnet und als Raster-Dataset gespeichert (Abb.3). Die Berechnung erfolgt durch den Rastercalculator in ArcMap.
-					<p align="middle"><a href="media/1b_Pegelstaende.png" target="blank_"><img src="media/1b_Pegelstaende.png" alt="Pegelstände"></a></p>
-					<p align="middle">Abb.3: Screenshot aus ArcMap - Pegelstände der Mosel in der Innenstadt Trier</p>
+				<li><b>Datenaufbereitung - Korrektur von unnatÃ¼rlichen Senken</b>
+					<br>Im ersten Schritt wurden unnatÃ¼rliche Senken, welche hÃ¤ufig in digitalen GelÃ¤ndemodellen durch Messfehler auftreten, korregiert. Mit Hilfe des Werkzeuges "Flow direction" angewendet auf das DGM wird zunÃ¤chst fÃ¼r jede Rasterzelle des GelÃ¤ndemodells die FlieÃŸrichtung ermittelt. AnschlieÃŸend wurden mit dem Werkzeug "Sink" (Z-Wert = 136) die nicht natÃ¼rlichen Senken identifiziert und anschlieÃŸend mit dem Werkzeug "Fill" aufgefÃ¼llt.</li>
+				<li><b>Berechnung der einzelnen PegelstÃ¤nde</b>
+					<br>Ausgehend von einem Pegelnullpunkt von 121 Metern und einem mittleren Wasserstand von 3 Metern wurden in Schritten von 0,5 Metern die einzelnen PegelstÃ¤nde bis zu einer HÃ¶he von 133 Metern berechnet und als Raster-Dataset gespeichert (Abb.3). Die Berechnung erfolgt durch den Rastercalculator in ArcMap.
+					<p align="middle"><a href="media/1b_Pegelstaende.png" target="blank_"><img src="media/1b_Pegelstaende.png" alt="PegelstÃ¤nde"></a></p>
+					<p align="middle">Abb.3: Screenshot aus ArcMap - PegelstÃ¤nde der Mosel in der Innenstadt Trier</p>
 				</li>
-				<li><b>Umwandlung der Rasterdatensätze in Shapefiles</b>
-					<br>Mit Hilfe des Werkzeuges "Raster to Polygon" lassen sich die erstellten Raster-Datensätze in Shapefiles umwandeln. Aufgrund der großen Anzahl an Datensätzen erwies es sich als geschickt, diesen Arbeitsschritt als Batch-Verarbeitung auszuführen.
+				<li><b>Umwandlung der RasterdatensÃ¤tze in Shapefiles</b>
+					<br>Mit Hilfe des Werkzeuges "Raster to Polygon" lassen sich die erstellten Raster-DatensÃ¤tze in Shapefiles umwandeln. Aufgrund der groÃŸen Anzahl an DatensÃ¤tzen erwies es sich als geschickt, diesen Arbeitsschritt als Batch-Verarbeitung auszufÃ¼hren.
 					<br>
 				</li>
-				<li><b>Berechnung der Gefährdung einzelner Gebäude</b>
-					<br>Durch das Verschneiden der Gebäude mit den einzelnen Pegelständen der Mosel können die vom Hochwasser betroffenen Gebäude identifiziert werden (Abb.4). In Abhängigkeit vom Pegelstand wurden 6 Gefährdungskategorien erstellt von keine (0) über niedrig (1) bis hohe Gefährdung (5).
+				<li><b>Berechnung der GefÃ¤hrdung einzelner GebÃ¤ude</b>
+					<br>Durch das Verschneiden der GebÃ¤ude mit den einzelnen PegelstÃ¤nden der Mosel kÃ¶nnen die vom Hochwasser betroffenen GebÃ¤ude identifiziert werden (Abb.4). In AbhÃ¤ngigkeit vom Pegelstand wurden 6 GefÃ¤hrdungskategorien erstellt von keine (0) Ã¼ber niedrig (1) bis hohe GefÃ¤hrdung (5).
 				
 					<p align="middle"><img src="media/2_Hochwasserrisiko_Trier.png" alt="Hochwasserrisiko Trier" width="800px"></p>
-					<p align="middle">Abb.4: Karte zur Hochwassergefährdung der Gebäude in der Innenstadt Trier</p>		
+					<p align="middle">Abb.4: Karte zur HochwassergefÃ¤hrdung der GebÃ¤ude in der Innenstadt Trier</p>		
 				</li>
 				<li><b>Quantitative Analyse des Hochwasserrisikos</b>
-				<p>Aus der Grundfläche (GF) , der Stockwerkszahl (SWZ) und der Nutzungsart eines jeden Gebäudes wurde zudem ermittelt, wie viele Einwohner vom Hochwasser betroffen sind (Tab.1). Dabei wurde pro Einwohner von einer druchschnittlichen Wohnfläche von 53 qm^2 (WFpE) ausgegangen. Bei Geäuden mit Mischnutzung wurde die SWZ um 1 reduziert. Die Zahlen wurden mit Hilfe der Attributtabelle und der Statistikabfrage in ArcMap ermittelt und in Excel zusammengefasst.
+				<p>Aus der GrundflÃ¤che (GF) , der Stockwerkszahl (SWZ) und der Nutzungsart eines jeden GebÃ¤udes wurde zudem ermittelt, wie viele Einwohner vom Hochwasser betroffen sind (Tab.1). Dabei wurde pro Einwohner von einer druchschnittlichen WohnflÃ¤che von 53 qm^2 (WFpE) ausgegangen. Bei GeÃ¤uden mit Mischnutzung wurde die SWZ um 1 reduziert. Die Zahlen wurden mit Hilfe der Attributtabelle und der Statistikabfrage in ArcMap ermittelt und in Excel zusammengefasst.
 				<br><br>
 				<b>Formel zur Berechnung:</b> Betroffene Einwohner = ( (GF * SWZ) / 2) / WFpE
 				<br><br>
@@ -78,29 +78,29 @@
 			</ol>
 
 			<h2>Interaktive Hochwasserrisikokarte in Google Earth</h2>
-			<p>Für eine interaktive Visualisierung der betroffenen Gebiete und Gebäude wurden die Daten in ArcMap in das Google Earth eigene KMZ-Format konvertiert. Diese können unter den folgenden Links heruntergeladen oder direkt in GoogleEarth geöffnet werden (Abb.5).</p>
+			<p>FÃ¼r eine interaktive Visualisierung der betroffenen Gebiete und GebÃ¤ude wurden die Daten in ArcMap in das Google Earth eigene KMZ-Format konvertiert. Diese kÃ¶nnen unter den folgenden Links heruntergeladen oder direkt in GoogleEarth geÃ¶ffnet werden (Abb.5).</p>
 				<ul>
-					<li><a href="data/GoogleEarth_Risiko.kmz" download>Gefährdete Flächen</a></li>
-					<li><a href="data/GoogleEarth_Risiko_Gebaeude.kmz" download>Gefährdete Gebäude</a></li>
+					<li><a href="data/GoogleEarth_Risiko.kmz" download>GefÃ¤hrdete FlÃ¤chen</a></li>
+					<li><a href="data/GoogleEarth_Risiko_Gebaeude.kmz" download>GefÃ¤hrdete GebÃ¤ude</a></li>
 				</ul>
-			<p align="middle"><img src="media/4_GoogleEarthGefaehrdung.jpg" alt="Screenshot GoogleEarth Gefährdung Trier" width="700px"></p>
+			<p align="middle"><img src="media/4_GoogleEarthGefaehrdung.jpg" alt="Screenshot GoogleEarth GefÃ¤hrdung Trier" width="700px"></p>
 			<p align="middle">Abb.5: Screenshot aus GoogleEarth - Hochwassergefahr Innenstadt Trier</p>		
 
 			<h2>Erstellung einer Hochwasseranimation mit ArcScene</h2>
-			<p>Aus den berechneten Pegelständen wurde anschließend eine Animation des steigenden Wasserpegels der Mosel in ArcScene erstellt (Abb.6). Hierbei wurden zunächst die Shapefiles der einzelnen Pegelstände und der topographischen Elemente der Innenstadt in ArcScene importiert. Da sich diese auf unterschiedliche Höhen beziehen, mussten die einzelnen Layer über die Einstellung der Basishöhen zunächst aufeinander abgestimmt werden. Anschließend wurde mit dem Setzen von Keyframes eine Animation erstellt, in der nacheinander die Shapefiles der verschiedenen Pegelstände eingeblendet werden, sodass der Eindruck eines steigenden Hochwasserpegels entsteht.</p>
+			<p>Aus den berechneten PegelstÃ¤nden wurde anschlieÃŸend eine Animation des steigenden Wasserpegels der Mosel in ArcScene erstellt (Abb.6). Hierbei wurden zunÃ¤chst die Shapefiles der einzelnen PegelstÃ¤nde und der topographischen Elemente der Innenstadt in ArcScene importiert. Da sich diese auf unterschiedliche HÃ¶hen beziehen, mussten die einzelnen Layer Ã¼ber die Einstellung der BasishÃ¶hen zunÃ¤chst aufeinander abgestimmt werden. AnschlieÃŸend wurde mit dem Setzen von Keyframes eine Animation erstellt, in der nacheinander die Shapefiles der verschiedenen PegelstÃ¤nde eingeblendet werden, sodass der Eindruck eines steigenden Hochwasserpegels entsteht.</p>
 			<br><br>
 			<p align="middle"><object data= "media/hochwasseranimation.avi" type= "video/x-msvideo" width= "701" height= "413"> 
 			Hochwasseranimation mit ArcScene</object></p>
 
 			<p align="middle"><br>Abb.6: Hochwasseranimation der Trierer Innenstadt erstellt mit ArcScene</p>
 			<h2>Bedeutung in der Geovisualisierung</h2>
-			<p>Die Beispiele oben stellen verschiedene Wege dar, räumliche Prozesse und Zusammenhänge kartographisch zu veranschaulichen. Die Darstellung der verschiedenen Pegelstände (Abb.3) stellt eine klassische Methode zur Visualisierung von flächendeckenden, kontinuierlichen Werten. Die Isolinien dienen hierbei zur Abgrenzung der einzelnen Wertebereiche. Auch die Hochwasserrisikokarte (Abb.4) gibt durch die farbliche Kodierung der Risikostufen die Gefährung einzelner Gebäude in der Innenstadt effektiv und leicht verständlich wieder.</p>
-			<p>Diese klassischen Karten sind in ihrer Informationsvermittlung zwar sehr effektiv, jedoch haben diese im Vergleich zu computerbasierten Visualisierungsverfahren einige Nachteile. So ist der Maßstab der Karte immer vorgegeben und Änderungen des Blickwinkels oder der Bildeigenschaften wie Beleuchtung oder Kontrast sind nicht möglich. Zudem sind die Karten in sich abgeschlossen und können nicht durch zusätzliche Daten erweitert werden.</p>
-			<p>Computerbasierte Visualisierungsmethoden bieten ein großes Maß an Dynamik und Interaktivität, welche neue Möglichkeiten für die kartographische Informationsvermittlung eröffnet. Das Video der Hochwasseranimation (Abb.6) gibt einen guten Eindruck über die zeitliche Dimension eines Hochwassers, welche mit einer statischen Karte nicht möglich ist. Die Dreidimensionalität macht die Darstellung zudem eindrucksvoller und nachvollziehbarer für den Benutzer. Mit Google Earth erhält der Nutzer darüber hinaus die Möglichkeit zur Interaktivität, indem er das Phänomen aus verschiedenen Perspektiven und Detailstufen betrachtet kann (Abb.5). Am obigen Beispiel ist es dadurch möglich, die Auswirkungen eines Hochwassers sowohl im kleinen Maßstab für die gesamte Innenstadt als auch im großen Maßstab auf der Basis von einzelnen Gebäuden zu analysieren. Darüber hinaus kann der Nutzer die Darstellung mit eigenen Geodaten ergänzen, um mehr weitere Informationen davon abzuleiten. Aufgrund dieser umfassenden Möglichkeiten kann die Darstellung des Hochwasserrisikos mit Google Earth in diesem Fall als wirkungsvollste Methode angesehen werden.
+			<p>Die Beispiele oben stellen verschiedene Wege dar, rÃ¤umliche Prozesse und ZusammenhÃ¤nge kartographisch zu veranschaulichen. Die Darstellung der verschiedenen PegelstÃ¤nde (Abb.3) stellt eine klassische Methode zur Visualisierung von flÃ¤chendeckenden, kontinuierlichen Werten. Die Isolinien dienen hierbei zur Abgrenzung der einzelnen Wertebereiche. Auch die Hochwasserrisikokarte (Abb.4) gibt durch die farbliche Kodierung der Risikostufen die GefÃ¤hrung einzelner GebÃ¤ude in der Innenstadt effektiv und leicht verstÃ¤ndlich wieder.</p>
+			<p>Diese klassischen Karten sind in ihrer Informationsvermittlung zwar sehr effektiv, jedoch haben diese im Vergleich zu computerbasierten Visualisierungsverfahren einige Nachteile. So ist der MaÃŸstab der Karte immer vorgegeben und Ã„nderungen des Blickwinkels oder der Bildeigenschaften wie Beleuchtung oder Kontrast sind nicht mÃ¶glich. Zudem sind die Karten in sich abgeschlossen und kÃ¶nnen nicht durch zusÃ¤tzliche Daten erweitert werden.</p>
+			<p>Computerbasierte Visualisierungsmethoden bieten ein groÃŸes MaÃŸ an Dynamik und InteraktivitÃ¤t, welche neue MÃ¶glichkeiten fÃ¼r die kartographische Informationsvermittlung erÃ¶ffnet. Das Video der Hochwasseranimation (Abb.6) gibt einen guten Eindruck Ã¼ber die zeitliche Dimension eines Hochwassers, welche mit einer statischen Karte nicht mÃ¶glich ist. Die DreidimensionalitÃ¤t macht die Darstellung zudem eindrucksvoller und nachvollziehbarer fÃ¼r den Benutzer. Mit Google Earth erhÃ¤lt der Nutzer darÃ¼ber hinaus die MÃ¶glichkeit zur InteraktivitÃ¤t, indem er das PhÃ¤nomen aus verschiedenen Perspektiven und Detailstufen betrachtet kann (Abb.5). Am obigen Beispiel ist es dadurch mÃ¶glich, die Auswirkungen eines Hochwassers sowohl im kleinen MaÃŸstab fÃ¼r die gesamte Innenstadt als auch im groÃŸen MaÃŸstab auf der Basis von einzelnen GebÃ¤uden zu analysieren. DarÃ¼ber hinaus kann der Nutzer die Darstellung mit eigenen Geodaten ergÃ¤nzen, um mehr weitere Informationen davon abzuleiten. Aufgrund dieser umfassenden MÃ¶glichkeiten kann die Darstellung des Hochwasserrisikos mit Google Earth in diesem Fall als wirkungsvollste Methode angesehen werden.
 			</p>
 			 <div>
 	          <h2>Quellen</h2>
-	          <p>Teucher, M. (2015): Vorlesung Geovisualisierung WS 2014/2015. Universität Trier.
+	          <p>Teucher, M. (2015): Vorlesung Geovisualisierung WS 2014/2015. UniversitÃ¤t Trier.
 	          </p>
         	</div>	
 		</div>
@@ -108,7 +108,7 @@
     </div>
 
     <div id="footer">
-      <p>Geovisualisierung | Unviersität Trier | WS 2014/2015 | Dr. A. Müller & M. Teucher | Student: Christina Ludwig (1166542)<br>
+      <p>Geovisualisierung | UnviersitÃ¤t Trier | WS 2014/2015 | Dr. A. MÃ¼ller & M. Teucher | Student: Christina Ludwig (1166542)<br>
       Design based on &copy;simplestyle_7 <a href="http://www.html5webtemplates.co.uk">from HTML5webtemplates.co.uk</a></p>
     </div>
   </div>
