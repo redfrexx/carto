@@ -6,18 +6,11 @@ function init(){
 
 var map = new OpenLayers.Map ('map',
   {  projection: new OpenLayers.Projection("EPSG:4326"),	// Projection via EPSG Code
-	displayProjection: new OpenLayers.Projection("EPSG:32632")	// Anzeige-KOS via EPSG Code
+	displayProjection: new OpenLayers.Projection("EPSG:3857")	// Anzeige-KOS via EPSG Code
   });
 
-var wms = new OpenLayers.Layer.WMS("Basis WMS",	//Hinzufügen eines OL WMS mit Basisinformationen als Kartenhintergrundinformationen
-			"http://vmap0.tiles.osgeo.org/wms/vmap0", 
-									{layers: 'basic,ctylabel'}, 									   
-									{isBaseLayer: true},	//Einstellung definiert Layer als Kartenhintergrund --> kann nicht ausgeschaltet werden
-									{projection: new OpenLayers.Projection("EPSG:4326")}	//Definition des KOS
-								   );
-			
-
-		
+var wms = new OpenLayers.Layer.OSM();
+	
 	roads = new OpenLayers.Layer.Vector("Straßennetz", {	//laden der GeoJson Datei
         	styleMap: general,						//hierüber werden die unterschiedlichen Visualisierungseinstellungen zugeordnet (siehe styleMap.js)
             rendererOptions: {zIndexing: true},
@@ -43,7 +36,10 @@ var wms = new OpenLayers.Layer.WMS("Basis WMS",	//Hinzufügen eines OL WMS mit B
 	}
 });
 
- var center = new OpenLayers.LonLat(6.67,49.76);				//Definition des Zentrums der OpenLayers Map, wird beim Start verwendet
+ var center = new OpenLayers.LonLat(6.64,49.755).transform(
+        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+        new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
+      );				//Definition des Zentrums der OpenLayers Map, wird beim Start verwendet
  map.addLayer(wms);												//Variablen wms und roads werden dem Map-Element hinzugefügt
  map.addLayer(roads);
  map.setCenter(center,14);										//Definition des Zentrierens der OpenLayers Map, wird beim Start aufgerufen und mit Zoomstufe 14 angezeigt
